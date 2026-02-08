@@ -1,1 +1,91 @@
-<h1> wybmv </h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>valentine?</title>
+    <link rel="stylesheet" href="global.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Birthstone&family=Imperial+Script&display=swap" rel="stylesheet">
+<body>
+
+    <div class="container">
+        <div id="questionScreen">
+            <div class="heart">
+                <iframe src="https://www.desmos.com/calculator/lo5vomudul?embed" width="530" height="400" style="border: 1px solid #ccc" frameborder=0></iframe>
+            </div>
+            <h1>will you be my valentine?</h1>
+            <div class="buttons">
+                <button id="yesBtn">yes</button>
+                <button id="noBtn">no</button>
+            </div>
+        </div>
+
+<div id="successScreen" class="hidden">
+    
+    <div style="text-align: left; background: #fffcf9; padding: 30px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative; max-width: 500px; margin: 0 auto; border: 1px solid #eee;">
+        
+        <div class="fade-1">
+            <p style="font-family: 'Courier New', monospace; font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; color: black;">
+                theorem: <span style="font-weight: normal;">you and i are meant to be.</span>
+            </p>
+            <p style="font-family: 'Courier New', monospace; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; color: black;">
+                proof: <span style="font-weight: normal;">you said yes.</span>
+            </p>
+            <hr style="border: 0; border-top: 1px dashed #ccc; margin: 20px 0;">
+        </div>
+
+        <div class="fade-2">
+            <p style="font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.2rem; margin-bottom: 10px; color: #333;">
+                therefore, the integral of our love over time is infinite:
+            </p>
+            
+            <div style="text-align: center; margin: 25px 0;">
+                <span style="font-family: 'Times New Roman', serif; font-size: 2.2rem; font-style: italic; color: #e91e63;">
+                    &int;<sub>now</sub><sup>&infin;</sup> love(t) dt = &infin;
+                </span>
+            </div>
+        </div>
+
+        <div class="fade-3" style="text-align: right; margin-top: 20px;">
+            <span style="font-family: 'Times New Roman', serif; font-weight: bold; font-size: 1.5rem; color: black;">Q.E.D.</span>
+        </div>
+
+    </div>
+
+    <p class="fade-4" style="margin-top: 30px; font-size: 1.8rem; color: #333;">
+        see u on the fourteenth ❤️
+    </p>
+</div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const questionScreen = document.getElementById('questionScreen');
+        const successScreen = document.getElementById('successScreen');
+
+        noBtn.addEventListener('mouseover', () => {
+            const maxWidth = window.innerWidth - noBtn.offsetWidth;
+            const maxHeight = window.innerHeight - noBtn.offsetHeight;
+
+            const randomX = Math.floor(Math.random() * maxWidth);
+            const randomY = Math.floor(Math.random() * maxHeight);
+
+            noBtn.style.position = 'fixed'; 
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        });
+
+        yesBtn.addEventListener('click', () => {
+            questionScreen.style.display = 'none';
+            successScreen.style.display = 'block';
+            
+            noBtn.style.display = 'none'; 
+        });
+    </script>
+</body>
+</html>
+
+<script src="script.js"></script>

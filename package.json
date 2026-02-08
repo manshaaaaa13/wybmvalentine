@@ -1,0 +1,24 @@
+{
+  "name": "wybmvalentine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manshaaaaa13/wybmvalentine.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/manshaaaaa13/wybmvalentine/issues"
+  },
+  "homepage": "https://github.com/manshaaaaa13/wybmvalentine#readme",
+  "devDependencies": {
+    "serve": "^14.2.5"
+  }
+}
