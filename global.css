@@ -140,4 +140,11 @@ iframe {
         font-size: 2.2rem !important;
         margin-top: 0;
     }
+
+    /* Find the span that holds the equation and shrink it on mobile */
+    #successScreen span[style*="font-size: 2.2rem"] {
+        font-size: 1.5rem !important; /* Shrink font so it fits */
+        white-space: nowrap;          /* Force it to stay on one line */
+        display: block;               /* Helps centering */
+    }
 }
