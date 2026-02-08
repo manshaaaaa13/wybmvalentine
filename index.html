@@ -59,33 +59,7 @@
     </p>
 </div>
     </div>
-
-    <script>
-        const yesBtn = document.getElementById('yesBtn');
-        const noBtn = document.getElementById('noBtn');
-        const questionScreen = document.getElementById('questionScreen');
-        const successScreen = document.getElementById('successScreen');
-
-        noBtn.addEventListener('mouseover', () => {
-            const maxWidth = window.innerWidth - noBtn.offsetWidth;
-            const maxHeight = window.innerHeight - noBtn.offsetHeight;
-
-            const randomX = Math.floor(Math.random() * maxWidth);
-            const randomY = Math.floor(Math.random() * maxHeight);
-
-            noBtn.style.position = 'fixed'; 
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-        });
-
-        yesBtn.addEventListener('click', () => {
-            questionScreen.style.display = 'none';
-            successScreen.style.display = 'block';
-            
-            noBtn.style.display = 'none'; 
-        });
-    </script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
-
-<script src="script.js"></script>
