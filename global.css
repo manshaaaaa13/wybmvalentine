@@ -1,6 +1,12 @@
+.courgette-regular {
+  font-family: "Courgette", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
     background-color: #E4CDD3;
-    font-family: 'Birthstone', cursive;
+    font-family: 'Courgette', cursive;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,18 +27,18 @@ body {
     width: 90%;
     max-width: 800px;
     margin: 0 auto;
-    max-height: 90vh;
-    overflow-y: auto;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 h1 {
-    color: #F9C2D1;
-    font-size: 60px;
+    color: #a6545d;
+    font-size: 45px;
+    margin: 25px 20px;
 }
 
 p{
@@ -53,18 +59,21 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.4s ease; 
-    font-family: 'Birthstone', cursive;
+    font-family: 'Courgette', cursive;
 }
 
 #yesBtn {
-    background-color: #E24767;
+    background-color: #ca8a91;
     color: white;
     z-index: 10;
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>✨</text></svg>") 16 0, pointer;
 }
 
 #noBtn {
-    background-color: #B51A3A;
+    background-color: #3f3034;
     color: white;
+    transition: transform 1s ease;
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>💔</text></svg>") 16 0, not-allowed;
 }
 
 .hidden {
@@ -77,20 +86,16 @@ button {
     margin-bottom: 20px;
 }
 
-iframe {
-    border: none !important; /* Removes the grey border */
-    border-radius: 15px;      /* Rounds the corners */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Adds a cute shadow */
-    background: white;        /* Ensures the background matches the graph */
+#calculator {
+    width: 100% !important;
+    height: 500px !important;
+    pointer-events: none;
 }
 
-/* ANIMATIONS */
-
-/* 1. The Fade Up Effect */
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(20px); /* Starts slightly lower */
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
@@ -98,56 +103,151 @@ iframe {
     }
 }
 
-/* 2. The Heartbeat Effect */
-@keyframes heartbeat {
-    0% { transform: scale(1); }
-    15% { transform: scale(1.3); } /* Pump 1 */
-    30% { transform: scale(1); }
-    45% { transform: scale(1.3); } /* Pump 2 */
-    60% { transform: scale(1); }
-    100% { transform: scale(1); }
-}
 
-/* CLASSES TO APPLY TO HTML */
 .fade-1 { animation: fadeInUp 0.8s ease forwards; opacity: 0; animation-delay: 0.1s; }
 .fade-2 { animation: fadeInUp 0.8s ease forwards; opacity: 0; animation-delay: 0.8s; } /* Waits for theorem */
 .fade-3 { animation: fadeInUp 0.8s ease forwards; opacity: 0; animation-delay: 1.8s; } /* Waits for equation */
 .fade-4 { animation: fadeInUp 0.8s ease forwards; opacity: 0; animation-delay: 2.5s; } /* The finale */
 
-/* --- MOBILE FIX (Paste at bottom of global.css) --- */
 @media (max-width: 600px) {
     
-    /* 1. Fix the Main Box */
+
     .container {
-        width: 90vw !important;  /* Force it to be 90% of the screen width */
+        width: 90vw !important;
         max-width: 100% !important;
-        padding: 15px !important; /* Smaller padding gives more room for content */
-        
-        /* Ensure it stays centered */
+        padding: 15px !important;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
     }
 
-    /* 2. Force the Desmos Graph to shrink */
     iframe {
-        width: 100% !important;  /* Squeeze it into the container */
-        height: auto !important; /* Let height adjust automatically */
-        aspect-ratio: 1 / 1;     /* Keep it a square */
-        pointer-events: none;    /* Prevents graph from getting stuck when scrolling */
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1;
+        pointer-events: none;
     }
 
-    /* 3. Shrink the Title text */
     h1 {
         font-size: 2.2rem !important;
         margin-top: 0;
     }
 
-    /* Find the span that holds the equation and shrink it on mobile */
     #successScreen span[style*="font-size: 2.2rem"] {
-        font-size: 1.5rem !important; /* Shrink font so it fits */
-        white-space: nowrap;          /* Force it to stay on one line */
-        display: block;               /* Helps centering */
+        font-size: 1.5rem !important;
+        white-space: nowrap;
+        display: block;
     }
 }
+
+#creditBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #ca8a91;
+    color: white;
+    font-size: 1.3rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease;
+    z-index: 999;
+}
+
+#creditBtn:hover {
+    transform: scale(1.1);
+}
+
+#creditPopup {
+    position: fixed;
+    bottom: 74px;
+    right: 20px;
+    background: #F7F3F0;
+    border: 1px solid #e0d5d7;
+    border-radius: 12px;
+    padding: 14px 20px;
+    text-align: center;
+    z-index: 998;
+    animation: fadeInUp 0.3s ease forwards;
+}
+
+#creditPopup p {
+    font-family: 'Courgette', cursive;
+    font-size: 1.1rem;
+    color: #3f3034;
+    margin: 0;
+}
+
+#creditPopup .credit-name {
+    font-size: 1.6rem;
+    color: #a6545d;
+    margin-top: 2px;
+}
+
+/* Send button */
+#sendBtn {
+    position: fixed;
+    bottom: 72px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #a6545d;
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease;
+    z-index: 999;
+}
+
+#sendBtn:hover { transform: scale(1.1); }
+
+/* Send modal */
+#sendModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(63, 48, 52, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(3px);
+}
+
+#sendModalBox {
+    background: #F7F3F0;
+    border-radius: 16px;
+    padding: 30px 28px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    max-width: 360px;
+    width: 90%;
+    font-family: 'Courgette', cursive;
+}
+
+#recipientInput {
+    font-family: 'Courgette', cursive;
+    font-size: 1.1rem;
+    padding: 10px 16px;
+    border: 1.5px solid #ca8a91;
+    border-radius: 8px;
+    outline: none;
+    color: #3f3034;
+    background: white;
+    width: 80%;
+    text-align: center;
+}
+
+#recipientInput:focus { border-color: #a6545d; }
