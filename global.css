@@ -4,143 +4,178 @@
   font-style: normal;
 }
 
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --blush:     #E4CDD3;
+    --rose:      #a6545d;
+    --deep-rose: #ca8a91;
+    --ink:       #3f3034;
+    --cream:     #F7F3F0;
+    --soft:      #f0e8ea;
+}
+
 body {
-    background-color: #E4CDD3;
+    background-color: var(--blush);
     font-family: 'Courgette', cursive;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
+    min-height: 100vh;
     overflow: hidden;
     position: fixed;
     width: 100%;
+    /* subtle grain overlay */
+    background-image:
+        radial-gradient(ellipse at 20% 50%, #d4b0b870 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, #e8c5cb60 0%, transparent 55%);
 }
 
+/* ── container ── */
 .container {
     text-align: center;
-    background: #F7F3F0;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: var(--cream);
+    padding: 28px 24px;
+    border-radius: 18px;
+    box-shadow: 0 8px 40px rgba(63,48,52,0.13);
     width: 90%;
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 560px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    box-sizing: border-box;
     overflow: hidden;
 }
 
+/* ── headings ── */
 h1 {
-    color: #a6545d;
-    font-size: 45px;
-    margin: 25px 20px;
+    color: var(--rose);
+    font-size: 2.4rem;
+    margin: 22px 16px;
+    line-height: 1.25;
 }
 
-p{
-    font-size: 50px
-}
-
+/* ── yes / no buttons ── */
 .buttons {
-    margin-top: 20px;
+    margin-top: 22px;
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 button {
-    font-size: 1.6rem;
-    padding: 10px 20px;
+    font-size: 1.5rem;
+    padding: 10px 28px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.4s ease; 
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
     font-family: 'Courgette', cursive;
 }
 
 #yesBtn {
-    background-color: #ca8a91;
+    background: var(--deep-rose);
     color: white;
     z-index: 10;
-    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>✨</text></svg>") 16 0, pointer;
+    box-shadow: 0 4px 14px rgba(166,84,93,0.35);
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48'><text y='80%' font-size='28'>✨</text></svg>") 16 0, pointer;
 }
+#yesBtn:hover { transform: scale(1.06); box-shadow: 0 6px 20px rgba(166,84,93,0.45); }
 
 #noBtn {
-    background-color: #3f3034;
+    background: var(--ink);
     color: white;
-    transition: transform 1s ease;
-    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>💔</text></svg>") 16 0, not-allowed;
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48'><text y='80%' font-size='28'>💔</text></svg>") 16 0, not-allowed;
 }
 
-.hidden {
-    display: none;
-}
-
-.heart-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
+/* ── Desmos calculator embed ── */
 #calculator {
     width: 100% !important;
-    height: 500px !important;
+    height: 340px !important;
     pointer-events: none;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #d8c9cc;
 }
 
+/* ── success / yes screen proof card ── */
+.proof-card {
+    text-align: left;
+    background: var(--cream);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.09);
+    max-width: 500px;
+    margin: 0 auto;
+    border: 1px solid #e8dfe1;
+}
+
+.proof-card .mono {
+    font-family: 'Courier New', monospace;
+    font-size: 1.05rem;
+    color: var(--ink);
+    line-height: 1.7;
+}
+.proof-card .mono strong { font-weight: 700; }
+
+.proof-card hr {
+    border: none;
+    border-top: 1px dashed #d0c5c7;
+    margin: 18px 0;
+}
+
+.proof-card .serif-italic {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--ink);
+}
+
+.integral {
+    text-align: center;
+    margin: 22px 0;
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 2.4rem;
+    font-style: italic;
+    color: var(--rose);
+    letter-spacing: 0.02em;
+}
+
+.qed {
+    text-align: right;
+    margin-top: 18px;
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+}
+
+.see-you {
+    margin-top: 28px;
+    font-size: 1.7rem;
+    color: var(--ink);
+}
+
+/* ── fade-in animations ── */
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0);    }
 }
+.fade-1 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 0.1s; }
+.fade-2 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 0.85s; }
+.fade-3 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 1.7s; }
+.fade-4 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 2.4s; }
 
+/* ── hidden utility ── */
+.hidden { display: none !important; }
 
-.fade-1 { animation: fadeInUp 0.8s ease forwards; opacity: 0; animation-delay: 0.1s; }
-.fade-2 { animation: fadeInUp 0.8s ease forwards; opacity: 0; animation-delay: 0.8s; } /* Waits for theorem */
-.fade-3 { animation: fadeInUp 0.8s ease forwards; opacity: 0; animation-delay: 1.8s; } /* Waits for equation */
-.fade-4 { animation: fadeInUp 0.8s ease forwards; opacity: 0; animation-delay: 2.5s; } /* The finale */
-
-@media (max-width: 600px) {
-    
-
-    .container {
-        width: 90vw !important;
-        max-width: 100% !important;
-        padding: 15px !important;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    iframe {
-        width: 100% !important;
-        height: auto !important;
-        aspect-ratio: 1 / 1;
-        pointer-events: none;
-    }
-
-    h1 {
-        font-size: 2.2rem !important;
-        margin-top: 0;
-    }
-
-    #successScreen span[style*="font-size: 2.2rem"] {
-        font-size: 1.5rem !important;
-        white-space: nowrap;
-        display: block;
-    }
-}
-
+/* ── credit button & popup ── */
 #creditBtn {
     position: fixed;
     bottom: 20px;
@@ -148,7 +183,7 @@ button {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: #ca8a91;
+    background: var(--deep-rose);
     color: white;
     font-size: 1.3rem;
     border: none;
@@ -159,47 +194,43 @@ button {
     box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     transition: transform 0.2s ease;
     z-index: 999;
+    padding: 0;
 }
-
-#creditBtn:hover {
-    transform: scale(1.1);
-}
+#creditBtn:hover { transform: scale(1.12); }
 
 #creditPopup {
     position: fixed;
-    bottom: 74px;
+    bottom: 136px; /* clears both buttons (20 + 44 + 8 + 44 + 8 = 124, +12 breathing room) */
     right: 20px;
-    background: #F7F3F0;
+    background: var(--cream);
     border: 1px solid #e0d5d7;
     border-radius: 12px;
     padding: 14px 20px;
     text-align: center;
     z-index: 998;
     animation: fadeInUp 0.3s ease forwards;
+    pointer-events: none;
 }
-
 #creditPopup p {
     font-family: 'Courgette', cursive;
-    font-size: 1.1rem;
-    color: #3f3034;
-    margin: 0;
+    font-size: 1rem;
+    color: var(--ink);
 }
-
 #creditPopup .credit-name {
-    font-size: 1.6rem;
-    color: #a6545d;
+    font-size: 1.5rem;
+    color: var(--rose);
     margin-top: 2px;
 }
 
-/* Send button */
+/* ── send button ── */
 #sendBtn {
     position: fixed;
-    bottom: 72px;
+    bottom: 76px; /* 20 + 44 + 12 gap */
     right: 20px;
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: #a6545d;
+    background: var(--rose);
     color: white;
     font-size: 1.2rem;
     border: none;
@@ -210,44 +241,213 @@ button {
     box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     transition: transform 0.2s ease;
     z-index: 999;
+    padding: 0;
 }
+#sendBtn:hover { transform: scale(1.12); }
+#sendBtn svg, #creditBtn svg { display: block; }
 
-#sendBtn:hover { transform: scale(1.1); }
-
-/* Send modal */
+/* ── send modal overlay ── */
 #sendModal {
     position: fixed;
     inset: 0;
-    background: rgba(63, 48, 52, 0.4);
+    background: rgba(63,48,52,0.45);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(4px);
 }
 
 #sendModalBox {
-    background: #F7F3F0;
-    border-radius: 16px;
-    padding: 30px 28px;
+    background: var(--cream);
+    border-radius: 18px;
+    padding: 32px 28px;
     text-align: center;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.18);
     max-width: 360px;
     width: 90%;
     font-family: 'Courgette', cursive;
+}
+
+#sendModalBox p {
+    font-size: 1.35rem;
+    color: var(--ink);
+    margin-bottom: 16px;
 }
 
 #recipientInput {
     font-family: 'Courgette', cursive;
     font-size: 1.1rem;
     padding: 10px 16px;
-    border: 1.5px solid #ca8a91;
+    border: 1.5px solid var(--deep-rose);
     border-radius: 8px;
     outline: none;
-    color: #3f3034;
+    color: var(--ink);
     background: white;
     width: 80%;
     text-align: center;
+    transition: border-color 0.2s;
+}
+#recipientInput:focus { border-color: var(--rose); }
+
+/* ── message textarea in modal ── */
+#messageInput {
+    font-family: 'Courgette', cursive;
+    font-size: 1rem;
+    padding: 10px 14px;
+    border: 1.5px solid var(--deep-rose);
+    border-radius: 8px;
+    outline: none;
+    color: var(--ink);
+    background: white;
+    width: 88%;
+    resize: none;
+    margin-top: 10px;
+    line-height: 1.5;
+    transition: border-color 0.2s;
+}
+#messageInput:focus { border-color: var(--rose); }
+#messageInput::placeholder { color: #c0a8ac; }
+
+/* ── sticky note ── */
+#stickyNote {
+    position: relative;
+    display: inline-block;
+    background: #fff9c4;
+    color: #5a4a2a;
+    font-family: 'Courgette', cursive;
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 14px 18px 14px 18px;
+    margin: 10px auto 2px;
+    max-width: 88%;
+    border-radius: 3px;
+    box-shadow: 3px 4px 10px rgba(0,0,0,0.13), 0 1px 2px rgba(0,0,0,0.08);
+    transform: rotate(-1.2deg);
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+    animation-delay: 0.1s;
+}
+/* tape strip across the top */
+#stickyNote::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 20px;
+    background: rgba(255,255,180,0.65);
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    backdrop-filter: blur(1px);
+}
+/* subtle ruled lines */
+#stickyNote::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+        transparent,
+        transparent 23px,
+        rgba(180,160,100,0.18) 23px,
+        rgba(180,160,100,0.18) 24px
+    );
+    border-radius: 3px;
+    pointer-events: none;
 }
 
-#recipientInput:focus { border-color: #a6545d; }
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+#generateLinkBtn {
+    background: var(--rose);
+    color: white;
+    font-size: 1.1rem;
+    padding: 9px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Courgette', cursive;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+#generateLinkBtn:hover { transform: scale(1.04); }
+
+#cancelModalBtn {
+    background: var(--ink);
+    color: white;
+    font-size: 1.1rem;
+    padding: 9px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Courgette', cursive;
+}
+
+#linkOutput {
+    margin-top: 20px;
+}
+#linkOutput p {
+    font-size: 0.95rem;
+    color: var(--ink);
+    margin-bottom: 8px;
+}
+#generatedLink {
+    font-size: 0.78rem;
+    color: var(--rose);
+    word-break: break-all;
+    background: var(--soft);
+    padding: 10px;
+    border-radius: 8px;
+}
+#copyLinkBtn {
+    margin-top: 12px;
+    background: var(--deep-rose);
+    color: white;
+    font-size: 1rem;
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Courgette', cursive;
+}
+#linkCopiedMsg {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: var(--rose);
+}
+
+/* ── "tell them you said yes" button ── */
+#iSaidYesBtn {
+    margin-top: 16px;
+    background: var(--rose);
+    color: white;
+    font-size: 1.1rem;
+    padding: 10px 24px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Courgette', cursive;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 14px rgba(166,84,93,0.3);
+}
+#iSaidYesBtn:hover { transform: scale(1.04); }
+
+#copiedMsg {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: var(--rose);
+}
+
+/* ── responsive ── */
+@media (max-width: 540px) {
+    h1 { font-size: 1.9rem; }
+    .container { padding: 18px 14px; }
+    #calculator { height: 260px !important; }
+    .integral { font-size: 1.8rem; }
+    .see-you { font-size: 1.4rem; }
+}

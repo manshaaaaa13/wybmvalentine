@@ -7,15 +7,18 @@
     <link rel="stylesheet" href="global.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
     <script src="https://www.desmos.com/api/v1.9/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
 </head>
 <body>
 
     <div class="container">
+
+        <!-- ── Question screen ── -->
         <div id="questionScreen">
-            <div class="heart">
-                <div id="calculator" style="width: 100%; height: 370px; border-radius: 15px; border: 1px solid #3f3034; overflow: hidden; background: white; margin: 0 auto;"></div>
+            <div id="calculator"></div>
+            <div id="stickyNote" class="hidden">
+                <span id="stickyText"></span>
             </div>
             <h1 id="mainQuestion">will you be my valentine?</h1>
             <div class="buttons">
@@ -24,70 +27,63 @@
             </div>
         </div>
 
+        <!-- ── Success screen ── -->
         <div id="successScreen" class="hidden">
-            <div style="text-align: left; background: #F7F3F0; padding: 30px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative; max-width: 500px; margin: 0 auto; border: 1px solid #eee;">
+            <div class="proof-card">
                 <div class="fade-1">
-                    <p style="font-family: 'Courier New', monospace; font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; color: #3f3034;">
-                        theorem: <span style="font-weight: normal;">you and i are meant to be.</span>
-                    </p>
-                    <p style="font-family: 'Courier New', monospace; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; color: #3f3034;">
-                        proof: <span style="font-weight: normal;">you said yes.</span>
-                    </p>
-                    <hr style="border: 0; border-top: 1px dashed #F7F3F090; margin: 20px 0;">
+                    <p class="mono"><strong>theorem:</strong> you and i are meant to be.</p>
+                    <p class="mono" style="margin-top:8px"><strong>proof:</strong> you said yes.</p>
+                    <hr>
                 </div>
                 <div class="fade-2">
-                    <p style="font-family: 'Times New Roman', serif; font-style: italic; font-size: 1.2rem; margin-bottom: 10px; color: #3f3034;">
-                        therefore, the integral of our love over time is infinite:
-                    </p>
-                    <div style="text-align: center; margin: 25px 0;">
-                        <span style="font-family: 'Times New Roman', serif; font-size: 2.2rem; font-style: italic; color: #a6545d;">
-                            &int;<sub>now</sub><sup>&infin;</sup> love(t) dt = &infin;
-                        </span>
+                    <p class="serif-italic">therefore, the integral of our love over time is infinite:</p>
+                    <div class="integral">
+                        &int;<sub>now</sub><sup>&infin;</sup> love(t) dt = &infin;
                     </div>
                 </div>
-                <div class="fade-3" style="text-align: right; margin-top: 20px;">
-                    <span style="font-family: 'Times New Roman', serif; font-weight: bold; font-size: 1.5rem; color: #3f3034;">Q.E.D.</span>
-                </div>
+                <div class="fade-3 qed">Q.E.D.</div>
             </div>
-            <p class="fade-4" style="margin-top: 30px; font-size: 1.8rem; color: #3f3034;">
-                see u on the fourteenth ❤️
-            </p>
-            <!-- Button to copy "I said yes" link back to sender -->
-            <button class="fade-4" id="iSaidYesBtn" style="margin-top: 16px; background: #a6545d; color: white; font-size: 1.1rem; padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer; font-family: 'Courgette', cursive;">
-                tell them you said yes 💌
-            </button>
-            <p id="copiedMsg" class="hidden" style="margin-top: 10px; font-size: 1rem; color: #a6545d;">link copied! send it to them 🥰</p>
+
+            <p class="fade-4 see-you">see u on the fourteenth ❤️</p>
+
+            <button class="fade-4" id="iSaidYesBtn">tell them you said yes 💌</button>
+            <p id="copiedMsg" class="hidden">link copied! send it to them 🥰</p>
         </div>
+
     </div>
 
-    <!-- Send modal -->
+    <!-- ── Send modal ── -->
     <div id="sendModal" class="hidden">
         <div id="sendModalBox">
-            <p style="font-size: 1.4rem; color: #3f3034; margin-bottom: 16px;">who's this for? 💌</p>
-            <input id="recipientInput" type="text" placeholder="their name..." />
-            <div style="display:flex; gap: 10px; justify-content: center; margin-top: 16px;">
+            <p>who's this for? 💌</p>
+            <input id="recipientInput" type="text" placeholder="their name…" autocomplete="off" />
+            <textarea id="messageInput" placeholder="leave them a little note… (optional)" rows="3"></textarea>
+            <div class="modal-buttons">
                 <button id="generateLinkBtn">make the link ✨</button>
-                <button id="cancelModalBtn" style="background: #3f3034;">cancel</button>
+                <button id="cancelModalBtn">cancel</button>
             </div>
-            <div id="linkOutput" class="hidden" style="margin-top: 20px;">
-                <p style="font-size: 0.95rem; color: #3f3034; margin-bottom: 8px;">your link is ready!</p>
-                <div id="generatedLink" style="font-size: 0.8rem; color: #a6545d; word-break: break-all; background: #f0e8ea; padding: 10px; border-radius: 8px;"></div>
-                <button id="copyLinkBtn" style="margin-top: 12px; background: #ca8a91;">copy link 💕</button>
-                <p id="linkCopiedMsg" class="hidden" style="margin-top: 8px; font-size: 0.9rem; color: #a6545d;">copied! go send it 🥰</p>
+            <div id="linkOutput" class="hidden">
+                <p>your link is ready!</p>
+                <div id="generatedLink"></div>
+                <button id="copyLinkBtn">copy link 💕</button>
+                <p id="linkCopiedMsg" class="hidden">copied! go send it 🥰</p>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="script.js"></script>
-
-    <button id="sendBtn" title="send to someone">💌</button>
-    <button id="creditBtn" onclick="document.getElementById('creditPopup').classList.toggle('hidden')">♡</button>
-
+    <button id="sendBtn" title="send to someone">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <polyline points="2,4 12,13 22,4"/>
+        </svg>
+    </button>
+    <button id="creditBtn" title="credits">♡</button>
     <div id="creditPopup" class="hidden">
         <p>made with love by</p>
         <p class="credit-name">mansha pardasani</p>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
