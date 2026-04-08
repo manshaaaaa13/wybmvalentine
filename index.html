@@ -170,69 +170,109 @@
             position: absolute; inset: 0;
             background: rgba(63,48,52,0.5); backdrop-filter: blur(5px);
         }
+
+        /* wrap is just the envelope size — letter slides up out of it */
         #envelopeWrap {
             position: relative;
-            width: 320px;
-            height: 440px;
-            z-index: 1;
-        }
-        #envelopeBox {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 220px;
+            width: 300px;
+            height: 200px;
         }
 
+        /* z-layer 1: back of envelope — behind everything */
         #envBack {
             position: absolute; inset: 0;
-            background: var(--soft); border-radius: 6px 6px 10px 10px;
+            background: var(--soft);
+            border-radius: 4px;
             border: 1.5px solid #d8c2c6;
+            z-index: 1;
+        }
+
+        /* z-layer 2: letter — slides up between back and front */
+        #letterCard {
+            position: absolute;
+            left: 8px; right: 8px;
+            bottom: 8px;
+            height: 180px;
+            background: white;
+            border-radius: 3px;
+            border: 1px solid #e8dfe1;
+            padding: 12px 14px;
+            z-index: 2;
+            overflow-y: auto;
+            background-image: repeating-linear-gradient(
+                transparent, transparent 27px, #e8d8da 27px, #e8d8da 28px
+            );
+            background-attachment: local;
+            transform: translateY(0);
+            transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        /* slides up so ~120px sticks out above envelope */
+        #letterCard.slide-up { transform: translateY(-128px); }
+
+        #letterBody {
+            font-family: 'Crimson Pro', Georgia, serif; font-style: italic;
+            font-size: 1.05rem; color: var(--ink); line-height: 27px;
+            white-space: pre-wrap; word-break: break-word;
+        }
+
+        /* z-layer 3: front bottom triangle — covers letter bottom, looks like inside of envelope */
+        #envFrontBottom {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 105px;
+            clip-path: polygon(0% 100%, 100% 100%, 50% 0%);
+            background: #e2d0d4;
+            border: 1.5px solid #d8c2c6;
+            z-index: 3;
+        }
+
+        /* z-layer 3: front side triangles */
+        #envFrontLeft {
+            position: absolute; inset: 0;
+            clip-path: polygon(0% 0%, 0% 100%, 50% 50%);
+            background: #ecdadd;
+            border: 1.5px solid #d8c2c6;
+            z-index: 3;
+        }
+        #envFrontRight {
+            position: absolute; inset: 0;
+            clip-path: polygon(100% 0%, 100% 100%, 50% 50%);
+            background: #ecdadd;
+            border: 1.5px solid #d8c2c6;
+            z-index: 3;
         }
 
         #envFlap {
-            position: absolute; top: 0; left: 0; width: 100%; height: 110px;
-            transform-origin: top center; transform: rotateX(0deg);
-            transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 5;
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 105px;
             clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
-            background: var(--cream); border: 1.5px solid #d8c2c6;
+            background: var(--cream);
+            border: 1.5px solid #d8c2c6;
+            transform-origin: top center;
+            transform: rotateX(0deg);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s 0.25s;
+            z-index: 4;
         }
-        #envFlap.open { transform: rotateX(180deg); }
-
-        #letterCard {
-            position: absolute;
-            left: 10px; right: 10px;
-            bottom: 10px;
-            height: 340px;
-            background: white; border-radius: 6px;
-            border: 1px solid #e8dfe1; padding: 24px 20px 16px;
-            z-index: 2; overflow-y: auto;
-            background-image: repeating-linear-gradient(transparent, transparent 27px, #e8d8da 27px, #e8d8da 28px);
-            background-attachment: local;
-            transform: translateY(0px);
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        #envFlap.open {
+            transform: rotateX(180deg);
+            z-index: 0;
         }
-        #letterCard.slide-up { transform: translateY(-210px); }
 
+        /* close button: below the envelope */
         #closeLetter {
-            display: block; margin: 0 auto 14px;
+            position: absolute;
+            bottom: -44px; left: 50%;
+            transform: translateX(-50%);
             background: var(--soft); color: var(--rose);
             border: 1px solid var(--deep-rose); border-radius: 6px;
             padding: 4px 14px; font-size: 0.9rem;
             font-family: 'Courgette', cursive; cursor: pointer;
+            white-space: nowrap; z-index: 10;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
         }
+        #closeLetter.visible { opacity: 1; pointer-events: auto; }
         #closeLetter:hover { background: var(--blush); }
-
-        #letterBody {
-            font-family: 'Crimson Pro', Georgia, serif; font-style: italic;
-            font-size: 1.15rem; color: var(--ink); line-height: 28px;
-            padding-top: 4px; white-space: pre-wrap; word-break: break-word;
-        }
-
-        #envFront {
-            position: absolute; bottom: 0; left: 0; right: 0; height: 90px;
-            background: var(--cream); border-radius: 6px 6px 10px 10px;
-            border: 1.5px solid #d8c2c6; z-index: 4;
-        }
 
         @media (max-width: 540px) {
             h1 { font-size: 1.9rem; }
@@ -276,19 +316,16 @@
         </div>
     </div>
 
-    <!-- letter modal -->
     <div id="letterModal" class="hidden">
         <div id="letterModalBg"></div>
         <div id="envelopeWrap">
-            <div id="envelopeBox">
-                <div id="envBack"></div>
-                <div id="envFlap"></div>
-                <div id="letterCard">
-                    <button id="closeLetter">close ✕</button>
-                    <div id="letterBody"></div>
-                </div>
-                <div id="envFront"></div>
-            </div>
+            <div id="envBack"></div>
+            <div id="letterCard"><div id="letterBody"></div></div>
+            <div id="envFrontBottom"></div>
+            <div id="envFrontLeft"></div>
+            <div id="envFrontRight"></div>
+            <div id="envFlap"></div>
+            <button id="closeLetter">close ✕</button>
         </div>
     </div>
 
@@ -403,7 +440,7 @@
             var origin = window.location.origin;
             var yesUrl = origin + '/yes.html';
             if (recipientName) {
-                yesUrl += '?to=' + encodeURIComponent(recipientName);
+                yesUrl += '#to=' + encodeURIComponent(recipientName);
             }
             navigator.clipboard.writeText(yesUrl).then(function() {
                 document.getElementById('copiedMsg').classList.remove('hidden');
@@ -464,6 +501,7 @@
                     document.getElementById('envFlap').classList.add('open');
                     setTimeout(function() {
                         document.getElementById('letterCard').classList.add('slide-up');
+                        document.getElementById('closeLetter').classList.add('visible');
                     }, 420);
                 });
             });
@@ -471,6 +509,7 @@
 
         function closeLetter() {
             if (!letterIsOpen) return;
+            document.getElementById('closeLetter').classList.remove('visible');
             document.getElementById('letterCard').classList.remove('slide-up');
             setTimeout(function() {
                 document.getElementById('envFlap').classList.remove('open');
@@ -484,6 +523,11 @@
         document.getElementById('letterBtn').addEventListener('click', openLetter);
         document.getElementById('closeLetter').addEventListener('click', closeLetter);
         document.getElementById('letterModalBg').addEventListener('click', closeLetter);
+
+        // (2) auto-open letter if recipient has a message
+        if (senderMessage) {
+            setTimeout(openLetter, 800);
+        }
 
         // ── Desmos heart ──
         var elt  = document.getElementById('calculator');
