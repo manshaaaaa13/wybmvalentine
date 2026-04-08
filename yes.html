@@ -4,33 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>she said yes 🥹</title>
-    <link rel="stylesheet" href="global.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blush:     #E4CDD3;
+            --rose:      #a6545d;
+            --deep-rose: #ca8a91;
+            --ink:       #3f3034;
+            --cream:     #F7F3F0;
+            --soft:      #f0e8ea;
+        }
+
+        body {
+            background-color: var(--blush);
+            background-image:
+                radial-gradient(ellipse at 20% 50%, #d4b0b870 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, #e8c5cb60 0%, transparent 55%);
+            font-family: 'Courgette', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+        }
+
+        .container {
+            text-align: center;
+            background: var(--cream);
+            padding: 36px 24px;
+            border-radius: 18px;
+            box-shadow: 0 8px 40px rgba(63,48,52,0.13);
+            width: 90%;
+            max-width: 560px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .proof-card {
+            text-align: left; background: var(--cream); padding: 30px;
+            border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.09);
+            max-width: 500px; margin: 0 auto; border: 1px solid #e8dfe1;
+        }
+        .proof-card .mono { font-family: 'Courier New', monospace; font-size: 1.05rem; color: var(--ink); line-height: 1.7; }
+        .proof-card .mono strong { font-weight: 700; }
+        .proof-card hr { border: none; border-top: 1px dashed #d0c5c7; margin: 18px 0; }
+        .proof-card .serif-italic { font-family: 'Crimson Pro', Georgia, serif; font-style: italic; font-size: 1.2rem; color: var(--ink); }
+
+        .integral { text-align: center; margin: 22px 0; font-family: 'Crimson Pro', Georgia, serif; font-size: 2.4rem; font-style: italic; color: var(--rose); }
+        .qed { text-align: right; margin-top: 18px; font-family: 'Crimson Pro', Georgia, serif; font-size: 1.5rem; color: var(--ink); }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .fade-1 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 0.1s; }
+        .fade-2 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 0.85s; }
+        .fade-3 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 1.7s; }
+
+        .hidden { display: none !important; }
+
+        #creditBtn {
+            position: fixed; bottom: 20px; right: 20px;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--deep-rose); color: white; font-size: 1.3rem;
+            border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            transition: transform 0.2s ease; z-index: 999; padding: 0;
+            font-family: 'Courgette', cursive;
+        }
+        #creditBtn:hover { transform: scale(1.12); }
+
+        /* fix 1: top right */
+        #creditPopup {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--cream); border: 1px solid #e0d5d7;
+            border-radius: 12px; padding: 14px 20px; text-align: center;
+            z-index: 998; pointer-events: none;
+            animation: fadeInUp 0.3s ease forwards;
+        }
+        #creditPopup p { font-size: 1rem; color: var(--ink); }
+        #creditPopup .credit-name { font-size: 1.5rem; color: var(--rose); margin-top: 2px; }
+    </style>
 </head>
 <body>
-
-    <div class="container" style="padding: 36px 24px;">
+    <div class="container">
         <div class="proof-card">
             <div class="fade-1">
-                <p class="mono"><strong>theorem:</strong> <span id="saidYesLine">they said yes.</span></p>
-                <p class="mono" style="margin-top:8px"><strong>proof:</strong> you asked.</p>
+                <p class="mono"><strong>theorem:</strong> <span id="theoremLine">you two are meant to be.</span></p>
+                <p class="mono" style="margin-top:8px"><strong>proof:</strong> <span id="proofLine">they said yes.</span></p>
                 <hr>
             </div>
             <div class="fade-2">
                 <p class="serif-italic">therefore, the integral of your love over time is infinite:</p>
-                <div class="integral">
-                    &int;<sub>now</sub><sup>&infin;</sup> love(t) dt = &infin;
-                </div>
+                <div class="integral">&int;<sub>now</sub><sup>&infin;</sup> love(t) dt = &infin;</div>
             </div>
             <div class="fade-3 qed">Q.E.D.</div>
         </div>
-
-        <p class="fade-4 see-you" id="seeYouLine">see u on the fourteenth ❤️</p>
     </div>
 
-    <button id="creditBtn" title="credits">♡</button>
+    <button id="creditBtn">♡</button>
     <div id="creditPopup" class="hidden">
         <p>made with love by</p>
         <p class="credit-name">mansha pardasani</p>
@@ -38,27 +119,25 @@
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
-        // Personalise with the recipient's name from the URL
-        const params = new URLSearchParams(window.location.search);
-        const name = params.get('to');
+        var params = new URLSearchParams(window.location.search);
+        var name   = params.get('to');
 
         if (name) {
-            document.getElementById('saidYesLine').textContent = `${name} said yes.`;
-            document.title = `${name} said yes 🥹`;
+            document.getElementById('theoremLine').textContent = name + ' + you are meant to be.';
+            document.getElementById('proofLine').textContent   = name + ' said yes.';
+            document.title = name + ' said yes 🥹';
         }
 
-        // Confetti burst on load
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const colors = ['#ca8a91', '#a6545d'];
-                [[{y:0,x:0},315],[{y:0,x:1},225],[{y:1,x:0},45],[{y:1,x:1},135]].forEach(([origin, angle]) => {
-                    confetti({ particleCount: 150, spread: 90, origin, ticks: 400, gravity: 0.65, decay: 0.94, startVelocity: 35, angle, colors });
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var colors = ['#ca8a91', '#a6545d'];
+                [[{y:0,x:0},315],[{y:0,x:1},225],[{y:1,x:0},45],[{y:1,x:1},135]].forEach(function(pair) {
+                    confetti({ particleCount: 150, spread: 90, origin: pair[0], ticks: 400, gravity: 0.65, decay: 0.94, startVelocity: 35, angle: pair[1], colors: colors });
                 });
             }, 600);
         });
 
-        // Credit popup toggle
-        document.getElementById('creditBtn').addEventListener('click', () => {
+        document.getElementById('creditBtn').addEventListener('click', function() {
             document.getElementById('creditPopup').classList.toggle('hidden');
         });
     </script>

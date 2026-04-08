@@ -29,7 +29,6 @@ body {
     overflow: hidden;
     position: fixed;
     width: 100%;
-    /* subtle grain overlay */
     background-image:
         radial-gradient(ellipse at 20% 50%, #d4b0b870 0%, transparent 60%),
         radial-gradient(ellipse at 80% 20%, #e8c5cb60 0%, transparent 55%);
@@ -175,7 +174,7 @@ button {
 /* ── hidden utility ── */
 .hidden { display: none !important; }
 
-/* ── credit button & popup ── */
+/* ── credit button (stays bottom right) ── */
 #creditBtn {
     position: fixed;
     bottom: 20px;
@@ -198,9 +197,10 @@ button {
 }
 #creditBtn:hover { transform: scale(1.12); }
 
+/* Fix 1: credit popup moves to top right ── */
 #creditPopup {
     position: fixed;
-    bottom: 136px; /* clears both buttons (20 + 44 + 8 + 44 + 8 = 124, +12 breathing room) */
+    top: 20px;
     right: 20px;
     background: var(--cream);
     border: 1px solid #e0d5d7;
@@ -225,7 +225,7 @@ button {
 /* ── send button ── */
 #sendBtn {
     position: fixed;
-    bottom: 76px; /* 20 + 44 + 12 gap */
+    bottom: 76px;
     right: 20px;
     width: 44px;
     height: 44px;
@@ -244,7 +244,29 @@ button {
     padding: 0;
 }
 #sendBtn:hover { transform: scale(1.12); }
-#sendBtn svg, #creditBtn svg { display: block; }
+
+/* ── letter button (same position as send btn, shown on recipient side) ── */
+#letterBtn {
+    position: fixed;
+    bottom: 76px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--rose);
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease;
+    z-index: 999;
+    padding: 0;
+}
+#letterBtn:hover { transform: scale(1.12); }
 
 /* ── send modal overlay ── */
 #sendModal {
@@ -290,7 +312,6 @@ button {
 }
 #recipientInput:focus { border-color: var(--rose); }
 
-/* ── message textarea in modal ── */
 #messageInput {
     font-family: 'Courgette', cursive;
     font-size: 1rem;
@@ -308,54 +329,6 @@ button {
 }
 #messageInput:focus { border-color: var(--rose); }
 #messageInput::placeholder { color: #c0a8ac; }
-
-/* ── sticky note ── */
-#stickyNote {
-    position: relative;
-    display: inline-block;
-    background: #fff9c4;
-    color: #5a4a2a;
-    font-family: 'Courgette', cursive;
-    font-size: 1rem;
-    line-height: 1.6;
-    padding: 14px 18px 14px 18px;
-    margin: 10px auto 2px;
-    max-width: 88%;
-    border-radius: 3px;
-    box-shadow: 3px 4px 10px rgba(0,0,0,0.13), 0 1px 2px rgba(0,0,0,0.08);
-    transform: rotate(-1.2deg);
-    animation: fadeInUp 0.6s ease forwards;
-    opacity: 0;
-    animation-delay: 0.1s;
-}
-/* tape strip across the top */
-#stickyNote::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 48px;
-    height: 20px;
-    background: rgba(255,255,180,0.65);
-    border-radius: 2px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    backdrop-filter: blur(1px);
-}
-/* subtle ruled lines */
-#stickyNote::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: repeating-linear-gradient(
-        transparent,
-        transparent 23px,
-        rgba(180,160,100,0.18) 23px,
-        rgba(180,160,100,0.18) 24px
-    );
-    border-radius: 3px;
-    pointer-events: none;
-}
 
 .modal-buttons {
     display: flex;
@@ -443,6 +416,159 @@ button {
     color: var(--rose);
 }
 
+/* ════════════════════════════════════════════
+   Fix 2: Envelope + letter modal
+   ════════════════════════════════════════════ */
+
+/* Full-screen overlay */
+#letterModal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+}
+
+/* Blurred backdrop — separate element so clicks can close */
+#letterModalBg {
+    position: absolute;
+    inset: 0;
+    background: rgba(63,48,52,0.5);
+    backdrop-filter: blur(5px);
+}
+
+/* ── Envelope wrapper: centres everything ── */
+#envelopeWrap {
+    position: relative;
+    width: 320px;
+    height: 220px;
+    z-index: 1;
+}
+
+/* ── Envelope back (sits behind letter) ── */
+#envBack {
+    position: absolute;
+    inset: 0;
+    background: var(--soft);
+    border-radius: 6px 6px 10px 10px;
+    border: 1.5px solid #d8c2c6;
+    /* V-shaped bottom fold lines via gradient */
+    background-image:
+        linear-gradient(135deg, transparent 49.5%, #d8c2c6 49.5%, #d8c2c6 50.5%, transparent 50.5%),
+        linear-gradient(225deg, transparent 49.5%, #d8c2c6 49.5%, #d8c2c6 50.5%, transparent 50.5%);
+    background-size: 50% 100%, 50% 100%;
+    background-position: left bottom, right bottom;
+    background-repeat: no-repeat;
+    background-color: var(--soft);
+}
+
+/* ── Envelope flap (triangle pointing down, folds open upward) ── */
+#envFlap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 110px; /* tall enough to cover top half */
+    overflow: hidden;
+    transform-origin: top center;
+    transform: rotateX(0deg);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 3;
+    /* Clip to a downward-pointing triangle */
+    clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+    background: var(--cream);
+    border-left: 1.5px solid #d8c2c6;
+    border-right: 1.5px solid #d8c2c6;
+    border-top: 1.5px solid #d8c2c6;
+}
+
+/* Flap open state: rotate back (unfolds upward away from viewer) */
+#envFlap.open {
+    transform: rotateX(180deg);
+}
+
+/* ── Letter card (slides up out of envelope) ── */
+#letterCard {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    /* Start peeking just above the envelope bottom */
+    bottom: 10px;
+    height: 260px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e8dfe1;
+    padding: 24px 20px 16px;
+    z-index: 2;
+    overflow-y: auto;
+    /* Lined paper ruled lines */
+    background-image: repeating-linear-gradient(
+        transparent,
+        transparent 27px,
+        #e8d8da 27px,
+        #e8d8da 28px
+    );
+    background-attachment: local;
+    /* Hidden below envelope initially */
+    transform: translateY(110%);
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Letter slides up */
+#letterCard.slide-up {
+    transform: translateY(-60%);
+}
+
+/* Close button inside letter */
+#closeLetter {
+    display: block;
+    margin: 0 auto 14px;
+    background: var(--soft);
+    color: var(--rose);
+    border: 1px solid var(--deep-rose);
+    border-radius: 6px;
+    padding: 4px 14px;
+    font-size: 0.9rem;
+    font-family: 'Courgette', cursive;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#closeLetter:hover { background: var(--blush); }
+
+/* Letter message text */
+#letterBody {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--ink);
+    line-height: 28px; /* matches ruled lines */
+    padding-top: 4px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* ── Envelope front strip (covers bottom of letter, sits above it) ── */
+#envFront {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: var(--cream);
+    border-radius: 6px 6px 10px 10px;
+    border: 1.5px solid #d8c2c6;
+    z-index: 4;
+    /* Diagonal fold lines to mimic envelope bottom flap seam */
+    background-image:
+        linear-gradient(135deg, transparent 49.5%, #d8c2c6 49.5%, #d8c2c6 50.5%, transparent 50.5%),
+        linear-gradient(225deg, transparent 49.5%, #d8c2c6 49.5%, #d8c2c6 50.5%, transparent 50.5%);
+    background-size: 50% 100%, 50% 100%;
+    background-position: left bottom, right bottom;
+    background-repeat: no-repeat;
+    background-color: var(--cream);
+}
+
 /* ── responsive ── */
 @media (max-width: 540px) {
     h1 { font-size: 1.9rem; }
@@ -450,4 +576,6 @@ button {
     #calculator { height: 260px !important; }
     .integral { font-size: 1.8rem; }
     .see-you { font-size: 1.4rem; }
+    #envelopeWrap { width: 280px; height: 190px; }
+    #letterCard { height: 220px; }
 }
