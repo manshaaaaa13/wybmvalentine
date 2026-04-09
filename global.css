@@ -1,9 +1,3 @@
-.courgette-regular {
-  font-family: "Courgette", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
-
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -21,6 +15,9 @@
 
 body {
     background-color: var(--blush);
+    background-image:
+        radial-gradient(ellipse at 20% 50%, #d4b0b870 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, #e8c5cb60 0%, transparent 55%);
     font-family: 'Courgette', cursive;
     display: flex;
     justify-content: center;
@@ -29,12 +26,8 @@ body {
     overflow: hidden;
     position: fixed;
     width: 100%;
-    background-image:
-        radial-gradient(ellipse at 20% 50%, #d4b0b870 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, #e8c5cb60 0%, transparent 55%);
 }
 
-/* ── container ── */
 .container {
     text-align: center;
     background: var(--cream);
@@ -50,7 +43,6 @@ body {
     overflow: hidden;
 }
 
-/* ── headings ── */
 h1 {
     color: var(--rose);
     font-size: 2.4rem;
@@ -59,6 +51,7 @@ h1 {
 }
 
 /* ── yes / no buttons ── */
+
 .buttons {
     margin-top: 22px;
     display: flex;
@@ -92,7 +85,8 @@ button {
     cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48'><text y='80%' font-size='28'>💔</text></svg>") 16 0, not-allowed;
 }
 
-/* ── Desmos calculator embed ── */
+/* ── Desmos embed ── */
+
 #calculator {
     width: 100% !important;
     height: 340px !important;
@@ -102,7 +96,8 @@ button {
     border: 1px solid #d8c9cc;
 }
 
-/* ── success / yes screen proof card ── */
+/* ── proof card (shared by index + yes) ── */
+
 .proof-card {
     text-align: left;
     background: var(--cream);
@@ -149,7 +144,6 @@ button {
     text-align: right;
     margin-top: 18px;
     font-family: 'Crimson Pro', Georgia, serif;
-    font-weight: 400;
     font-size: 1.5rem;
     color: var(--ink);
     letter-spacing: 0.05em;
@@ -162,29 +156,26 @@ button {
 }
 
 /* ── fade-in animations ── */
+
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0);    }
+    to   { opacity: 1; transform: translateY(0); }
 }
 .fade-1 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 0.1s; }
 .fade-2 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 0.85s; }
 .fade-3 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 1.7s; }
 .fade-4 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 2.4s; }
 
-/* ── hidden utility ── */
 .hidden { display: none !important; }
 
-/* ── credit button (stays bottom right) ── */
-#creditBtn {
+/* ── fixed side buttons (credit, send, letter all share this) ── */
+
+.side-btn {
     position: fixed;
-    bottom: 20px;
     right: 20px;
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: var(--deep-rose);
-    color: white;
-    font-size: 1.3rem;
     border: none;
     cursor: pointer;
     display: flex;
@@ -194,10 +185,14 @@ button {
     transition: transform 0.2s ease;
     z-index: 999;
     padding: 0;
+    font-family: 'Courgette', cursive;
 }
-#creditBtn:hover { transform: scale(1.12); }
+.side-btn:hover { transform: scale(1.12); }
 
-/* Fix 1: credit popup moves to top right ── */
+#creditBtn { bottom: 20px;  background: var(--deep-rose); color: white; font-size: 1.3rem; }
+#sendBtn   { bottom: 76px; background: var(--rose); color: white; }
+#letterBtn { bottom: 76px; background: var(--rose); color: white; }
+
 #creditPopup {
     position: fixed;
     top: 20px;
@@ -208,67 +203,14 @@ button {
     padding: 14px 20px;
     text-align: center;
     z-index: 998;
-    animation: fadeInUp 0.3s ease forwards;
     pointer-events: none;
+    animation: fadeInUp 0.3s ease forwards;
 }
-#creditPopup p {
-    font-family: 'Courgette', cursive;
-    font-size: 1rem;
-    color: var(--ink);
-}
-#creditPopup .credit-name {
-    font-size: 1.5rem;
-    color: var(--rose);
-    margin-top: 2px;
-}
+#creditPopup p        { font-size: 1rem; color: var(--ink); }
+#creditPopup .credit-name { font-size: 1.5rem; color: var(--rose); margin-top: 2px; }
 
-/* ── send button ── */
-#sendBtn {
-    position: fixed;
-    bottom: 76px;
-    right: 20px;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--rose);
-    color: white;
-    font-size: 1.2rem;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    transition: transform 0.2s ease;
-    z-index: 999;
-    padding: 0;
-}
-#sendBtn:hover { transform: scale(1.12); }
+/* ── send modal ── */
 
-/* ── letter button (same position as send btn, shown on recipient side) ── */
-#letterBtn {
-    position: fixed;
-    bottom: 76px;
-    right: 20px;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--rose);
-    color: white;
-    font-size: 1.2rem;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    transition: transform 0.2s ease;
-    z-index: 999;
-    padding: 0;
-}
-#letterBtn:hover { transform: scale(1.12); }
-
-/* ── send modal overlay ── */
 #sendModal {
     position: fixed;
     inset: 0;
@@ -288,46 +230,25 @@ button {
     box-shadow: 0 12px 48px rgba(0,0,0,0.18);
     max-width: 360px;
     width: 90%;
-    font-family: 'Courgette', cursive;
 }
+#sendModalBox p { font-size: 1.35rem; color: var(--ink); margin-bottom: 16px; }
 
-#sendModalBox p {
-    font-size: 1.35rem;
-    color: var(--ink);
-    margin-bottom: 16px;
-}
-
-#recipientInput {
+#recipientInput,
+#messageInput {
     font-family: 'Courgette', cursive;
-    font-size: 1.1rem;
     padding: 10px 16px;
     border: 1.5px solid var(--deep-rose);
     border-radius: 8px;
     outline: none;
     color: var(--ink);
     background: white;
-    width: 80%;
-    text-align: center;
     transition: border-color 0.2s;
 }
-#recipientInput:focus { border-color: var(--rose); }
-
-#messageInput {
-    font-family: 'Courgette', cursive;
-    font-size: 1rem;
-    padding: 10px 14px;
-    border: 1.5px solid var(--deep-rose);
-    border-radius: 8px;
-    outline: none;
-    color: var(--ink);
-    background: white;
-    width: 88%;
-    resize: none;
-    margin-top: 10px;
-    line-height: 1.5;
-    transition: border-color 0.2s;
-}
+#recipientInput:focus,
 #messageInput:focus { border-color: var(--rose); }
+
+#recipientInput { width: 80%; text-align: center; font-size: 1.1rem; }
+#messageInput   { width: 88%; resize: none; margin-top: 10px; font-size: 1rem; line-height: 1.5; }
 #messageInput::placeholder { color: #c0a8ac; }
 
 .modal-buttons {
@@ -346,7 +267,6 @@ button {
     border: none;
     cursor: pointer;
     font-family: 'Courgette', cursive;
-    transition: transform 0.2s, box-shadow 0.2s;
 }
 #generateLinkBtn:hover { transform: scale(1.04); }
 
@@ -361,40 +281,14 @@ button {
     font-family: 'Courgette', cursive;
 }
 
-#linkOutput {
-    margin-top: 20px;
-}
-#linkOutput p {
-    font-size: 0.95rem;
-    color: var(--ink);
-    margin-bottom: 8px;
-}
-#generatedLink {
-    font-size: 0.78rem;
-    color: var(--rose);
-    word-break: break-all;
-    background: var(--soft);
-    padding: 10px;
-    border-radius: 8px;
-}
-#copyLinkBtn {
-    margin-top: 12px;
-    background: var(--deep-rose);
-    color: white;
-    font-size: 1rem;
-    padding: 8px 18px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-family: 'Courgette', cursive;
-}
-#linkCopiedMsg {
-    margin-top: 8px;
-    font-size: 0.9rem;
-    color: var(--rose);
-}
+#linkOutput        { margin-top: 20px; }
+#linkOutput p      { font-size: 0.95rem; color: var(--ink); margin-bottom: 8px; }
+#generatedLink     { font-size: 0.78rem; color: var(--rose); word-break: break-all; background: var(--soft); padding: 10px; border-radius: 8px; }
+#copyLinkBtn       { margin-top: 12px; background: var(--deep-rose); color: white; font-size: 1rem; padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer; font-family: 'Courgette', cursive; }
+#linkCopiedMsg     { margin-top: 8px; font-size: 0.9rem; color: var(--rose); }
 
-/* ── "tell them you said yes" button ── */
+/* ── "tell them you said yes" ── */
+
 #iSaidYesBtn {
     margin-top: 16px;
     background: var(--rose);
@@ -405,22 +299,14 @@ button {
     border: none;
     cursor: pointer;
     font-family: 'Courgette', cursive;
-    transition: transform 0.2s, box-shadow 0.2s;
     box-shadow: 0 4px 14px rgba(166,84,93,0.3);
 }
 #iSaidYesBtn:hover { transform: scale(1.04); }
 
-#copiedMsg {
-    margin-top: 10px;
-    font-size: 0.95rem;
-    color: var(--rose);
-}
+#copiedMsg { margin-top: 10px; font-size: 0.95rem; color: var(--rose); }
 
-/* ════════════════════════════════════════════
-   Fix 2: Envelope + letter modal
-   ════════════════════════════════════════════ */
+/* ── letter / envelope modal ── */
 
-/* Full-screen overlay */
 #letterModal {
     position: fixed;
     inset: 0;
@@ -430,7 +316,6 @@ button {
     z-index: 1100;
 }
 
-/* Blurred backdrop — separate element so clicks can close */
 #letterModalBg {
     position: absolute;
     inset: 0;
@@ -438,92 +323,100 @@ button {
     backdrop-filter: blur(5px);
 }
 
-/* ── Envelope wrapper: centres everything ── */
 #envelopeWrap {
     position: relative;
-    width: 320px;
-    height: 220px;
+    width: 300px;
+    height: 200px;
     z-index: 1;
 }
 
-/* ── Envelope back (sits behind letter) ── */
 #envBack {
     position: absolute;
     inset: 0;
     background: var(--soft);
-    border-radius: 6px 6px 10px 10px;
+    border-radius: 4px;
     border: 1.5px solid #d8c2c6;
-    /* V-shaped bottom fold lines via gradient */
-    background-image:
-        linear-gradient(135deg, transparent 49.5%, #d8c2c6 49.5%, #d8c2c6 50.5%, transparent 50.5%),
-        linear-gradient(225deg, transparent 49.5%, #d8c2c6 49.5%, #d8c2c6 50.5%, transparent 50.5%);
-    background-size: 50% 100%, 50% 100%;
-    background-position: left bottom, right bottom;
-    background-repeat: no-repeat;
-    background-color: var(--soft);
 }
 
-/* ── Envelope flap (triangle pointing down, folds open upward) ── */
 #envFlap {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 110px; /* tall enough to cover top half */
-    overflow: hidden;
-    transform-origin: top center;
-    transform: rotateX(0deg);
-    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 3;
-    /* Clip to a downward-pointing triangle */
+    top: 0; left: 0; right: 0;
+    height: 105px;
     clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
     background: var(--cream);
-    border-left: 1.5px solid #d8c2c6;
-    border-right: 1.5px solid #d8c2c6;
-    border-top: 1.5px solid #d8c2c6;
+    border: 1.5px solid #d8c2c6;
+    transform-origin: top center;
+    transform: rotateX(0deg);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 4;
 }
-
-/* Flap open state: rotate back (unfolds upward away from viewer) */
 #envFlap.open {
     transform: rotateX(180deg);
+    z-index: 0;
 }
 
-/* ── Letter card (slides up out of envelope) ── */
 #letterCard {
     position: absolute;
-    left: 10px;
-    right: 10px;
-    /* Start peeking just above the envelope bottom */
-    bottom: 10px;
-    height: 260px;
+    left: 8px; right: 8px;
+    bottom: 8px;
+    height: 180px;
     background: white;
-    border-radius: 6px;
+    border-radius: 3px;
     border: 1px solid #e8dfe1;
-    padding: 24px 20px 16px;
+    padding: 12px 14px;
     z-index: 2;
     overflow-y: auto;
-    /* Lined paper ruled lines */
     background-image: repeating-linear-gradient(
-        transparent,
-        transparent 27px,
-        #e8d8da 27px,
-        #e8d8da 28px
+        transparent, transparent 27px,
+        #e8d8da 27px, #e8d8da 28px
     );
     background-attachment: local;
-    /* Hidden below envelope initially */
-    transform: translateY(110%);
-    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateY(0);
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+#letterCard.slide-up { transform: translateY(-128px); }
+
+#letterBody {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink);
+    line-height: 27px;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
-/* Letter slides up */
-#letterCard.slide-up {
-    transform: translateY(-60%);
+#envFrontBottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 105px;
+    clip-path: polygon(0% 100%, 100% 100%, 50% 0%);
+    background: #e2d0d4;
+    border: 1.5px solid #d8c2c6;
+    z-index: 3;
+}
+#envFrontLeft {
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(0% 0%, 0% 100%, 50% 50%);
+    background: #ecdadd;
+    border: 1.5px solid #d8c2c6;
+    z-index: 3;
+}
+#envFrontRight {
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(100% 0%, 100% 100%, 50% 50%);
+    background: #ecdadd;
+    border: 1.5px solid #d8c2c6;
+    z-index: 3;
 }
 
-/* Close button inside letter */
 #closeLetter {
-    display: block;
-    margin: 0 auto 14px;
+    position: absolute;
+    bottom: -44px;
+    left: 50%;
+    transform: translateX(-50%);
     background: var(--soft);
     color: var(--rose);
     border: 1px solid var(--deep-rose);
@@ -532,50 +425,23 @@ button {
     font-size: 0.9rem;
     font-family: 'Courgette', cursive;
     cursor: pointer;
-    transition: background 0.2s;
+    white-space: nowrap;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
-#closeLetter:hover { background: var(--blush); }
-
-/* Letter message text */
-#letterBody {
-    font-family: 'Crimson Pro', Georgia, serif;
-    font-style: italic;
-    font-size: 1.15rem;
-    color: var(--ink);
-    line-height: 28px; /* matches ruled lines */
-    padding-top: 4px;
-    white-space: pre-wrap;
-    word-break: break-word;
-}
-
-/* ── Envelope front strip (covers bottom of letter, sits above it) ── */
-#envFront {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 80px;
-    background: var(--cream);
-    border-radius: 6px 6px 10px 10px;
-    border: 1.5px solid #d8c2c6;
-    z-index: 4;
-    /* Diagonal fold lines to mimic envelope bottom flap seam */
-    background-image:
-        linear-gradient(135deg, transparent 49.5%, #d8c2c6 49.5%, #d8c2c6 50.5%, transparent 50.5%),
-        linear-gradient(225deg, transparent 49.5%, #d8c2c6 49.5%, #d8c2c6 50.5%, transparent 50.5%);
-    background-size: 50% 100%, 50% 100%;
-    background-position: left bottom, right bottom;
-    background-repeat: no-repeat;
-    background-color: var(--cream);
-}
+#closeLetter.visible { opacity: 1; pointer-events: auto; }
+#closeLetter:hover   { background: var(--blush); }
 
 /* ── responsive ── */
+
 @media (max-width: 540px) {
-    h1 { font-size: 1.9rem; }
+    h1         { font-size: 1.9rem; }
     .container { padding: 18px 14px; }
-    #calculator { height: 260px !important; }
-    .integral { font-size: 1.8rem; }
-    .see-you { font-size: 1.4rem; }
-    #envelopeWrap { width: 280px; height: 190px; }
-    #letterCard { height: 220px; }
+    #calculator    { height: 260px !important; }
+    .integral      { font-size: 1.8rem; }
+    .see-you       { font-size: 1.4rem; }
+    #envelopeWrap  { width: 280px; height: 190px; }
+    #letterCard    { height: 220px; }
 }

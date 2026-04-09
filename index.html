@@ -3,294 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>valentine?</title>
+    <title>valentines?</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="global.css">
     <script src="https://www.desmos.com/api/v1.9/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-            --blush:     #E4CDD3;
-            --rose:      #a6545d;
-            --deep-rose: #ca8a91;
-            --ink:       #3f3034;
-            --cream:     #F7F3F0;
-            --soft:      #f0e8ea;
-        }
-
-        body {
-            background-color: var(--blush);
-            background-image:
-                radial-gradient(ellipse at 20% 50%, #d4b0b870 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, #e8c5cb60 0%, transparent 55%);
-            font-family: 'Courgette', cursive;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            position: fixed;
-            width: 100%;
-        }
-
-        .container {
-            text-align: center;
-            background: var(--cream);
-            padding: 28px 24px;
-            border-radius: 18px;
-            box-shadow: 0 8px 40px rgba(63,48,52,0.13);
-            width: 90%;
-            max-width: 560px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            overflow: hidden;
-        }
-
-        h1 { color: var(--rose); font-size: 2.4rem; margin: 22px 16px; line-height: 1.25; }
-
-        .buttons { margin-top: 22px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-
-        button {
-            font-size: 1.5rem; padding: 10px 28px; border: none; border-radius: 8px;
-            cursor: pointer; transition: transform 0.35s ease, box-shadow 0.35s ease;
-            font-family: 'Courgette', cursive;
-        }
-
-        #yesBtn {
-            background: var(--deep-rose); color: white; z-index: 10;
-            box-shadow: 0 4px 14px rgba(166,84,93,0.35);
-        }
-        #yesBtn:hover { transform: scale(1.06); box-shadow: 0 6px 20px rgba(166,84,93,0.45); }
-        #noBtn  { background: var(--ink); color: white; }
-
-        #calculator {
-            width: 100% !important; height: 340px !important;
-            pointer-events: none; border-radius: 12px;
-            overflow: hidden; border: 1px solid #d8c9cc;
-        }
-
-        .proof-card {
-            text-align: left; background: var(--cream); padding: 30px;
-            border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.09);
-            max-width: 500px; margin: 0 auto; border: 1px solid #e8dfe1;
-        }
-        .proof-card .mono { font-family: 'Courier New', monospace; font-size: 1.05rem; color: var(--ink); line-height: 1.7; }
-        .proof-card .mono strong { font-weight: 700; }
-        .proof-card hr { border: none; border-top: 1px dashed #d0c5c7; margin: 18px 0; }
-        .proof-card .serif-italic { font-family: 'Crimson Pro', Georgia, serif; font-style: italic; font-size: 1.2rem; color: var(--ink); }
-
-        .integral { text-align: center; margin: 22px 0; font-family: 'Crimson Pro', Georgia, serif; font-size: 2.4rem; font-style: italic; color: var(--rose); }
-        .qed { text-align: right; margin-top: 18px; font-family: 'Crimson Pro', Georgia, serif; font-size: 1.5rem; color: var(--ink); }
-        .see-you { margin-top: 28px; font-size: 1.7rem; color: var(--ink); }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(18px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .fade-1 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 0.1s; }
-        .fade-2 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 0.85s; }
-        .fade-3 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 1.7s; }
-        .fade-4 { animation: fadeInUp 0.7s ease forwards; opacity: 0; animation-delay: 2.4s; }
-
-        .hidden { display: none !important; }
-
-        /* ── fixed side buttons ── */
-        .side-btn {
-            position: fixed; right: 20px; width: 44px; height: 44px;
-            border-radius: 50%; border: none; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-            transition: transform 0.2s ease; z-index: 999; padding: 0;
-            font-family: 'Courgette', cursive;
-        }
-        .side-btn:hover { transform: scale(1.12); }
-        #creditBtn { bottom: 20px;  background: var(--deep-rose); color: white; font-size: 1.3rem; }
-        #sendBtn   { bottom: 76px; background: var(--rose); color: white; }
-        #letterBtn { bottom: 76px; background: var(--rose); color: white; }
-
-        /* fix 1: credit popup top right */
-        #creditPopup {
-            position: fixed; top: 20px; right: 20px;
-            background: var(--cream); border: 1px solid #e0d5d7;
-            border-radius: 12px; padding: 14px 20px; text-align: center;
-            z-index: 998; pointer-events: none;
-            animation: fadeInUp 0.3s ease forwards;
-        }
-        #creditPopup p { font-size: 1rem; color: var(--ink); }
-        #creditPopup .credit-name { font-size: 1.5rem; color: var(--rose); margin-top: 2px; }
-
-        /* ── send modal ── */
-        #sendModal {
-            position: fixed; inset: 0; background: rgba(63,48,52,0.45);
-            display: flex; align-items: center; justify-content: center;
-            z-index: 1000; backdrop-filter: blur(4px);
-        }
-        #sendModalBox {
-            background: var(--cream); border-radius: 18px; padding: 32px 28px;
-            text-align: center; box-shadow: 0 12px 48px rgba(0,0,0,0.18);
-            max-width: 360px; width: 90%;
-        }
-        #sendModalBox p { font-size: 1.35rem; color: var(--ink); margin-bottom: 16px; }
-        #recipientInput, #messageInput {
-            font-family: 'Courgette', cursive; font-size: 1.1rem; padding: 10px 16px;
-            border: 1.5px solid var(--deep-rose); border-radius: 8px; outline: none;
-            color: var(--ink); background: white; transition: border-color 0.2s;
-        }
-        #recipientInput { width: 80%; text-align: center; }
-        #recipientInput:focus, #messageInput:focus { border-color: var(--rose); }
-        #messageInput { width: 88%; resize: none; margin-top: 10px; font-size: 1rem; line-height: 1.5; }
-        #messageInput::placeholder { color: #c0a8ac; }
-        .modal-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 16px; }
-        #generateLinkBtn { background: var(--rose); color: white; font-size: 1.1rem; padding: 9px 20px; border-radius: 8px; border: none; cursor: pointer; font-family: 'Courgette', cursive; }
-        #cancelModalBtn  { background: var(--ink);  color: white; font-size: 1.1rem; padding: 9px 20px; border-radius: 8px; border: none; cursor: pointer; font-family: 'Courgette', cursive; }
-        #linkOutput { margin-top: 20px; }
-        #linkOutput p { font-size: 0.95rem; color: var(--ink); margin-bottom: 8px; }
-        #generatedLink { font-size: 0.78rem; color: var(--rose); word-break: break-all; background: var(--soft); padding: 10px; border-radius: 8px; }
-        #copyLinkBtn { margin-top: 12px; background: var(--deep-rose); color: white; font-size: 1rem; padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer; font-family: 'Courgette', cursive; }
-        #linkCopiedMsg { margin-top: 8px; font-size: 0.9rem; color: var(--rose); }
-
-        #iSaidYesBtn {
-            margin-top: 16px; background: var(--rose); color: white; font-size: 1.1rem;
-            padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer;
-            font-family: 'Courgette', cursive; box-shadow: 0 4px 14px rgba(166,84,93,0.3);
-        }
-        #iSaidYesBtn:hover { transform: scale(1.04); }
-        #copiedMsg { margin-top: 10px; font-size: 0.95rem; color: var(--rose); }
-
-        /* ── letter modal ── */
-        #letterModal {
-            position: fixed; inset: 0; display: flex;
-            align-items: center; justify-content: center; z-index: 1100;
-        }
-        #letterModalBg {
-            position: absolute; inset: 0;
-            background: rgba(63,48,52,0.5); backdrop-filter: blur(5px);
-        }
-
-        /* wrap is just the envelope size — letter slides up out of it */
-        #envelopeWrap {
-            position: relative;
-            width: 300px;
-            height: 200px;
-        }
-
-        /* z-layer 1: back of envelope — behind everything */
-        #envBack {
-            position: absolute; inset: 0;
-            background: var(--soft);
-            border-radius: 4px;
-            border: 1.5px solid #d8c2c6;
-            z-index: 1;
-        }
-
-        /* z-layer 2: letter — slides up between back and front */
-        #letterCard {
-            position: absolute;
-            left: 8px; right: 8px;
-            bottom: 8px;
-            height: 180px;
-            background: white;
-            border-radius: 3px;
-            border: 1px solid #e8dfe1;
-            padding: 12px 14px;
-            z-index: 2;
-            overflow-y: auto;
-            background-image: repeating-linear-gradient(
-                transparent, transparent 27px, #e8d8da 27px, #e8d8da 28px
-            );
-            background-attachment: local;
-            transform: translateY(0);
-            transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        /* slides up so ~120px sticks out above envelope */
-        #letterCard.slide-up { transform: translateY(-128px); }
-
-        #letterBody {
-            font-family: 'Crimson Pro', Georgia, serif; font-style: italic;
-            font-size: 1.05rem; color: var(--ink); line-height: 27px;
-            white-space: pre-wrap; word-break: break-word;
-        }
-
-        /* z-layer 3: front bottom triangle — covers letter bottom, looks like inside of envelope */
-        #envFrontBottom {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 105px;
-            clip-path: polygon(0% 100%, 100% 100%, 50% 0%);
-            background: #e2d0d4;
-            border: 1.5px solid #d8c2c6;
-            z-index: 3;
-        }
-
-        /* z-layer 3: front side triangles */
-        #envFrontLeft {
-            position: absolute; inset: 0;
-            clip-path: polygon(0% 0%, 0% 100%, 50% 50%);
-            background: #ecdadd;
-            border: 1.5px solid #d8c2c6;
-            z-index: 3;
-        }
-        #envFrontRight {
-            position: absolute; inset: 0;
-            clip-path: polygon(100% 0%, 100% 100%, 50% 50%);
-            background: #ecdadd;
-            border: 1.5px solid #d8c2c6;
-            z-index: 3;
-        }
-
-        #envFlap {
-            position: absolute; top: 0; left: 0; right: 0;
-            height: 105px;
-            clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
-            background: var(--cream);
-            border: 1.5px solid #d8c2c6;
-            transform-origin: top center;
-            transform: rotateX(0deg);
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s 0.25s;
-            z-index: 4;
-        }
-        #envFlap.open {
-            transform: rotateX(180deg);
-            z-index: 0;
-        }
-
-        /* close button: below the envelope */
-        #closeLetter {
-            position: absolute;
-            bottom: -44px; left: 50%;
-            transform: translateX(-50%);
-            background: var(--soft); color: var(--rose);
-            border: 1px solid var(--deep-rose); border-radius: 6px;
-            padding: 4px 14px; font-size: 0.9rem;
-            font-family: 'Courgette', cursive; cursor: pointer;
-            white-space: nowrap; z-index: 10;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        #closeLetter.visible { opacity: 1; pointer-events: auto; }
-        #closeLetter:hover { background: var(--blush); }
-
-        @media (max-width: 540px) {
-            h1 { font-size: 1.9rem; }
-            .container { padding: 18px 14px; }
-            #calculator { height: 260px !important; }
-            .integral { font-size: 1.8rem; }
-            .see-you { font-size: 1.4rem; }
-            #envelopeWrap { width: 280px; height: 190px; }
-            #letterCard { height: 220px; }
-        }
-    </style>
 </head>
 <body>
 
     <div class="container">
         <div id="questionScreen">
             <div id="calculator"></div>
-            <h1 id="mainQuestion">will you be my valentine?</h1>
+            <h1 id="question">will you be my valentine?</h1>
             <div class="buttons">
                 <button id="yesBtn">yes</button>
                 <button id="noBtn">no</button>
@@ -316,6 +41,7 @@
         </div>
     </div>
 
+    <!-- letter modal -->
     <div id="letterModal" class="hidden">
         <div id="letterModalBg"></div>
         <div id="envelopeWrap">
@@ -333,7 +59,7 @@
     <div id="sendModal" class="hidden">
         <div id="sendModalBox">
             <p>who's this for? 💌</p>
-            <input id="recipientInput" type="text" placeholder="their name…" autocomplete="off" />
+            <input id="recipientInput" type="text" placeholder="their name…" autocomplete="off">
             <textarea id="messageInput" placeholder="leave them a little note… (optional)" rows="3"></textarea>
             <div class="modal-buttons">
                 <button id="generateLinkBtn">make the link ✨</button>
@@ -355,198 +81,20 @@
             <polyline points="2,4 12,13 22,4"/>
         </svg>
     </button>
-
     <button class="side-btn hidden" id="letterBtn" title="open your letter">
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 8l9-5 9 5v11a1 1 0 01-1 1H4a1 1 0 01-1-1V8z"/>
             <polyline points="3,8 12,14 21,8"/>
         </svg>
     </button>
-
     <button class="side-btn" id="creditBtn" title="credits">♡</button>
+
     <div id="creditPopup" class="hidden">
         <p>made with love by</p>
         <p class="credit-name">mansha pardasani</p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script>
-        // ── URL params ──
-        const params        = new URLSearchParams(window.location.search);
-        const recipientName = params.get('to');
-        const senderMessage = params.get('msg');
-
-        // ── Personalise question ──
-        if (recipientName) {
-            document.getElementById('mainQuestion').textContent =
-                'will you be my valentine, ' + recipientName + '?';
-        }
-
-        // ── Fix 3: "tell them" only for recipients ──
-        if (recipientName) {
-            document.getElementById('iSaidYesBtn').classList.remove('hidden');
-        }
-
-        // ── Fix 2: sender vs recipient ──
-        if (recipientName) {
-            document.getElementById('sendBtn').classList.add('hidden');
-            if (senderMessage) {
-                document.getElementById('letterBtn').classList.remove('hidden');
-                document.getElementById('letterBody').textContent = senderMessage;
-            }
-        }
-
-        // ── No button dodge ──
-        var noScale = 1, yesScale = 1;
-        var noBtn  = document.getElementById('noBtn');
-        var yesBtn = document.getElementById('yesBtn');
-
-        function moveNoButton() {
-            if (noBtn.parentNode !== document.body) {
-                document.body.appendChild(noBtn);
-                noBtn.style.position = 'fixed';
-                noBtn.style.zIndex   = '100';
-            }
-            var w = noBtn.offsetWidth, h = noBtn.offsetHeight;
-            noBtn.style.left = Math.floor(Math.random() * Math.max(0, window.innerWidth  - w - 20)) + 'px';
-            noBtn.style.top  = Math.floor(Math.random() * Math.max(0, window.innerHeight - h - 20)) + 'px';
-            noScale  = Math.max(0.3, noScale  * 0.8);
-            yesScale = Math.min(1.6, yesScale + 0.15);
-            noBtn.style.transform  = 'scale(' + noScale  + ')';
-            yesBtn.style.transform = 'scale(' + yesScale + ')';
-        }
-
-        noBtn.addEventListener('mouseover', moveNoButton);
-        noBtn.addEventListener('touchstart', function(e) { e.preventDefault(); moveNoButton(); }, { passive: false });
-
-        // ── Confetti ──
-        function fireConfetti() {
-            var colors = ['#ca8a91', '#a6545d'];
-            [[{y:0,x:0},315],[{y:0,x:1},225],[{y:1,x:0},45],[{y:1,x:1},135]].forEach(function(pair) {
-                confetti({ particleCount: 150, spread: 90, origin: pair[0], ticks: 400, gravity: 0.65, decay: 0.94, startVelocity: 35, angle: pair[1], colors: colors });
-            });
-        }
-
-        // ── Yes button ──
-        document.getElementById('yesBtn').addEventListener('click', function() {
-            document.getElementById('questionScreen').classList.add('hidden');
-            document.getElementById('successScreen').classList.remove('hidden');
-            noBtn.style.display = 'none';
-            fireConfetti();
-        });
-
-        // ── Tell them you said yes ──
-        document.getElementById('iSaidYesBtn').addEventListener('click', function() {
-            var origin = window.location.origin;
-            var yesUrl = origin + '/yes.html';
-            if (recipientName) {
-                yesUrl += '#to=' + encodeURIComponent(recipientName);
-            }
-            navigator.clipboard.writeText(yesUrl).then(function() {
-                document.getElementById('copiedMsg').classList.remove('hidden');
-            });
-        });
-
-        // ── Send modal ──
-        function openSendModal()  { document.getElementById('sendModal').classList.remove('hidden'); }
-        function closeSendModal() {
-            document.getElementById('sendModal').classList.add('hidden');
-            document.getElementById('linkOutput').classList.add('hidden');
-            document.getElementById('recipientInput').value = '';
-            document.getElementById('messageInput').value   = '';
-            document.getElementById('linkCopiedMsg').classList.add('hidden');
-            document.getElementById('generatedLink').textContent = '';
-        }
-
-        document.getElementById('sendBtn').addEventListener('click', openSendModal);
-        document.getElementById('cancelModalBtn').addEventListener('click', closeSendModal);
-        document.getElementById('sendModal').addEventListener('click', function(e) {
-            if (e.target === document.getElementById('sendModal')) closeSendModal();
-        });
-
-        document.getElementById('generateLinkBtn').addEventListener('click', function() {
-            var name    = document.getElementById('recipientInput').value.trim();
-            var message = document.getElementById('messageInput').value.trim();
-            if (!name) { document.getElementById('recipientInput').focus(); return; }
-            var base = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
-            var link = base + '?to=' + encodeURIComponent(name);
-            if (message) link += '&msg=' + encodeURIComponent(message);
-            document.getElementById('generatedLink').textContent = link;
-            document.getElementById('linkOutput').classList.remove('hidden');
-            document.getElementById('linkCopiedMsg').classList.add('hidden');
-        });
-
-        document.getElementById('copyLinkBtn').addEventListener('click', function() {
-            var link = document.getElementById('generatedLink').textContent;
-            if (!link) return;
-            navigator.clipboard.writeText(link).then(function() {
-                document.getElementById('linkCopiedMsg').classList.remove('hidden');
-            });
-        });
-
-        // ── Credits ──
-        document.getElementById('creditBtn').addEventListener('click', function() {
-            document.getElementById('creditPopup').classList.toggle('hidden');
-        });
-
-        // ── Letter animation ──
-        var letterIsOpen = false;
-
-        function openLetter() {
-            if (letterIsOpen) return;
-            letterIsOpen = true;
-            document.getElementById('letterModal').classList.remove('hidden');
-            requestAnimationFrame(function() {
-                requestAnimationFrame(function() {
-                    document.getElementById('envFlap').classList.add('open');
-                    setTimeout(function() {
-                        document.getElementById('letterCard').classList.add('slide-up');
-                        document.getElementById('closeLetter').classList.add('visible');
-                    }, 420);
-                });
-            });
-        }
-
-        function closeLetter() {
-            if (!letterIsOpen) return;
-            document.getElementById('closeLetter').classList.remove('visible');
-            document.getElementById('letterCard').classList.remove('slide-up');
-            setTimeout(function() {
-                document.getElementById('envFlap').classList.remove('open');
-                setTimeout(function() {
-                    document.getElementById('letterModal').classList.add('hidden');
-                    letterIsOpen = false;
-                }, 440);
-            }, 500);
-        }
-
-        document.getElementById('letterBtn').addEventListener('click', openLetter);
-        document.getElementById('closeLetter').addEventListener('click', closeLetter);
-        document.getElementById('letterModalBg').addEventListener('click', closeLetter);
-
-        // (2) auto-open letter if recipient has a message
-        if (senderMessage) {
-            setTimeout(openLetter, 800);
-        }
-
-        // ── Desmos heart ──
-        var elt  = document.getElementById('calculator');
-        var calc = Desmos.GraphingCalculator(elt, {
-            expressions: false, settingsMenu: false, zoomButtons: false,
-            lockViewport: true, border: false
-        });
-        calc.setMathBounds({ left: -2.5, right: 2.5, bottom: -1.55, top: 2.5 });
-        var time = 0;
-        (function pulseHeart() {
-            time += 0.02;
-            var a = 35 + 5 * Math.sin(time);
-            calc.setExpression({
-                id: 'heart',
-                latex: 'y = x^{\\frac{2}{3}} + 0.9\\sin(' + a.toFixed(3) + 'x)\\sqrt{3-x^{2}}',
-                color: '#a6545d'
-            });
-            requestAnimationFrame(pulseHeart);
-        })();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
