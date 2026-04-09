@@ -5,16 +5,16 @@
 }
 
 :root {
-    --blush:     #E4CDD3;
+    --lightpink:     #E4CDD3;
     --rose:      #a6545d;
-    --deep-rose: #ca8a91;
-    --ink:       #3f3034;
-    --cream:     #F7F3F0;
-    --soft:      #f0e8ea;
+    --pink: #ca8a91;
+    --dark:       #030303;
+    --white:     #F7F3F0;
+    --otherwhite:      #f0e8ea;
 }
 
 body {
-    background-color: var(--blush);
+    background-color: var(--lightpink);
     background-image:
         radial-gradient(ellipse at 20% 50%, #d4b0b870 0%, transparent 60%),
         radial-gradient(ellipse at 80% 20%, #e8c5cb60 0%, transparent 55%);
@@ -30,7 +30,7 @@ body {
 
 .container {
     text-align: center;
-    background: var(--cream);
+    background: var(--white);
     padding: 28px 24px;
     border-radius: 18px;
     box-shadow: 0 8px 40px rgba(63,48,52,0.13);
@@ -71,7 +71,7 @@ button {
 }
 
 #yesBtn {
-    background: var(--deep-rose);
+    background: var(--pink);
     color: white;
     z-index: 10;
     box-shadow: 0 4px 14px rgba(166,84,93,0.35);
@@ -80,7 +80,7 @@ button {
 #yesBtn:hover { transform: scale(1.06); box-shadow: 0 6px 20px rgba(166,84,93,0.45); }
 
 #noBtn {
-    background: var(--ink);
+    background: var(--dark);
     color: white;
     cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48'><text y='80%' font-size='28'>💔</text></svg>") 16 0, not-allowed;
 }
@@ -100,7 +100,7 @@ button {
 
 .proof-card {
     text-align: left;
-    background: var(--cream);
+    background: var(--white);
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.09);
@@ -112,7 +112,7 @@ button {
 .proof-card .mono {
     font-family: 'Courier New', monospace;
     font-size: 1.05rem;
-    color: var(--ink);
+    color: var(--dark);
     line-height: 1.7;
 }
 .proof-card .mono strong { font-weight: 700; }
@@ -127,7 +127,7 @@ button {
     font-family: 'Crimson Pro', Georgia, serif;
     font-style: italic;
     font-size: 1.2rem;
-    color: var(--ink);
+    color: var(--dark);
 }
 
 .integral {
@@ -145,14 +145,14 @@ button {
     margin-top: 18px;
     font-family: 'Crimson Pro', Georgia, serif;
     font-size: 1.5rem;
-    color: var(--ink);
+    color: var(--dark);
     letter-spacing: 0.05em;
 }
 
 .see-you {
     margin-top: 28px;
     font-size: 1.7rem;
-    color: var(--ink);
+    color: var(--dark);
 }
 
 /* ── fade-in animations ── */
@@ -189,7 +189,7 @@ button {
 }
 .side-btn:hover { transform: scale(1.12); }
 
-#creditBtn { bottom: 20px;  background: var(--deep-rose); color: white; font-size: 1.3rem; }
+#creditBtn { bottom: 20px;  background: var(--pink); color: white; font-size: 1.3rem; }
 #sendBtn   { bottom: 76px; background: var(--rose); color: white; }
 #letterBtn { bottom: 76px; background: var(--rose); color: white; }
 
@@ -197,7 +197,7 @@ button {
     position: fixed;
     top: 20px;
     right: 20px;
-    background: var(--cream);
+    background: var(--white);
     border: 1px solid #e0d5d7;
     border-radius: 12px;
     padding: 14px 20px;
@@ -206,7 +206,7 @@ button {
     pointer-events: none;
     animation: fadeInUp 0.3s ease forwards;
 }
-#creditPopup p        { font-size: 1rem; color: var(--ink); }
+#creditPopup p        { font-size: 1rem; color: var(--dark); }
 #creditPopup .credit-name { font-size: 1.5rem; color: var(--rose); margin-top: 2px; }
 
 /* ── send modal ── */
@@ -223,7 +223,7 @@ button {
 }
 
 #sendModalBox {
-    background: var(--cream);
+    background: var(--white);
     border-radius: 18px;
     padding: 32px 28px;
     text-align: center;
@@ -231,16 +231,16 @@ button {
     max-width: 360px;
     width: 90%;
 }
-#sendModalBox p { font-size: 1.35rem; color: var(--ink); margin-bottom: 16px; }
+#sendModalBox p { font-size: 1.35rem; color: var(--dark); margin-bottom: 16px; }
 
 #recipientInput,
 #messageInput {
     font-family: 'Courgette', cursive;
     padding: 10px 16px;
-    border: 1.5px solid var(--deep-rose);
+    border: 1.5px solid var(--pink);
     border-radius: 8px;
     outline: none;
-    color: var(--ink);
+    color: var(--dark);
     background: white;
     transition: border-color 0.2s;
 }
@@ -271,7 +271,7 @@ button {
 #generateLinkBtn:hover { transform: scale(1.04); }
 
 #cancelModalBtn {
-    background: var(--ink);
+    background: var(--dark);
     color: white;
     font-size: 1.1rem;
     padding: 9px 20px;
@@ -282,9 +282,9 @@ button {
 }
 
 #linkOutput        { margin-top: 20px; }
-#linkOutput p      { font-size: 0.95rem; color: var(--ink); margin-bottom: 8px; }
-#generatedLink     { font-size: 0.78rem; color: var(--rose); word-break: break-all; background: var(--soft); padding: 10px; border-radius: 8px; }
-#copyLinkBtn       { margin-top: 12px; background: var(--deep-rose); color: white; font-size: 1rem; padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer; font-family: 'Courgette', cursive; }
+#linkOutput p      { font-size: 0.95rem; color: var(--dark); margin-bottom: 8px; }
+#generatedLink     { font-size: 0.78rem; color: var(--rose); word-break: break-all; background: var(--otherwhite); padding: 10px; border-radius: 8px; }
+#copyLinkBtn       { margin-top: 12px; background: var(--pink); color: white; font-size: 1rem; padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer; font-family: 'Courgette', cursive; }
 #linkCopiedMsg     { margin-top: 8px; font-size: 0.9rem; color: var(--rose); }
 
 /* ── "tell them you said yes" ── */
@@ -333,7 +333,7 @@ button {
 #envBack {
     position: absolute;
     inset: 0;
-    background: var(--soft);
+    background: var(--otherwhite);
     border-radius: 4px;
     border: 1.5px solid #d8c2c6;
 }
@@ -343,7 +343,7 @@ button {
     top: 0; left: 0; right: 0;
     height: 105px;
     clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
-    background: var(--cream);
+    background: var(--white);
     border: 1.5px solid #d8c2c6;
     transform-origin: top center;
     transform: rotateX(0deg);
@@ -380,7 +380,7 @@ button {
     font-family: 'Crimson Pro', Georgia, serif;
     font-style: italic;
     font-size: 1.05rem;
-    color: var(--ink);
+    color: var(--dark);
     line-height: 27px;
     white-space: pre-wrap;
     word-break: break-word;
@@ -417,9 +417,9 @@ button {
     bottom: -44px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--soft);
+    background: var(--otherwhite);
     color: var(--rose);
-    border: 1px solid var(--deep-rose);
+    border: 1px solid var(--pink);
     border-radius: 6px;
     padding: 4px 14px;
     font-size: 0.9rem;
@@ -432,7 +432,7 @@ button {
     transition: opacity 0.3s ease;
 }
 #closeLetter.visible { opacity: 1; pointer-events: auto; }
-#closeLetter:hover   { background: var(--blush); }
+#closeLetter:hover   { background: var(--lightpink); }
 
 /* ── responsive ── */
 
